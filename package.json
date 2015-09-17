@@ -1,0 +1,23 @@
+{
+  "name": "schema2doc",
+  "version": "1.0.0",
+  "description": "Schema 2 doc converter, convert json schema to human readable form",
+  "author": "Peter Melisko <pmelisko@gratex.com>",
+  "bin": {
+    "schema2doc": "./bin/schema2doc"
+  },
+  "main": "lib/cli.js",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/pmelisko/schema2doc"
+  },
+  "bugs": {
+    "url": "https://github.com/pmelisko/schema2doc/issues"
+  },
+  "keywords": [
+    "json schema",
+    "generator"
+  ],
+  "preferGlobal": true,
+  "license": "MIT"
+}
