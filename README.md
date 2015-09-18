@@ -10,13 +10,9 @@ as the test cases.
 
 ## Goals
 
- - *granular* control about white spaces, indent and line breaks.
+ - to easily get overview about your schemas
+ - support json schema draft 3 and 4
  - command line interface (cli).
- - be non-destructive.
- - support for local/global config file so settings can be shared between team
-   members.
- - support most popular style guides (Google, jQuery, Idiomatic.js).
- - be the best JavaScript code formatter.
 
 ## CLI
 
@@ -43,9 +39,92 @@ options:
 
 ### Examples:
 
+####input schema
+
 ```sh
-TODO
+{
+        "type": "object",
+        "id": "Semaphore.POST.req.body.schema.json",
+        "$schema": "http://json-schema.org/draft-03/schema",
+        "additionalProperties": false,
+        "properties": {
+                "flagName": {
+                        "type": [
+                                "string",
+                                "null"
+                        ],
+                        "maxLength": 128,
+                        "required": true,
+                        "minLength": 1
+                },
+                "flagStatus": {
+                        "type": "boolean",
+                        "required": true
+                }
+        }
+}
 ```
+
+####Raw format (default options or -r)
+
+```sh
+RQ/NN   Field   Type    Format  Desc
+------  ------  ------  ------  ------
++-      flagName        string,null
+++      flagStatus      boolean
+```
+
+
+####HTML format (option -l)
+
+```html
+<html>
+ <meta http-equiv='Content-Type' content='text/html; charset=UTF-8'>
+ <head>
+  <style type='text/css'>table,th,td {     margin: 0;      padding: 0;     border: 1px solid black;border-collapse: collapse;}table table {width: 100%;border: 0;}td {vertical-align:top;}td.name {font-weight:bold;color: blue;   width: 150px;}
+  </style>
+ </head>
+ <body>
+  <table>
+   <tr>
+    <th>RQ/NN</th>
+    <th>Field</th>
+    <th>Type</th>
+    <th>Format</th>
+    <th>Desc</th>
+   </tr>
+   <tr>
+    <td class='name'>+-</td>
+    <td>flagName</td>
+    <td>string,null</td>
+    <td></td>
+    <td></td>
+   </tr>
+   <tr>
+    <td class='name'>++</td>
+    <td>flagStatus</td>
+    <td>boolean</td>
+    <td></td>
+    <td></td>
+   </tr>
+  </table>
+ </body>
+</html>
+```
+
+
+####CSV format (option -c)
+
+```sh
+sep=;
+RQ/NN;Field;Type;Format;Desc
++-;flagName;string,null;;
+++;flagStatus;boolean;;
+```
+## Links
+
+ - Json schema draft 3 [https://tools.ietf.org/html/draft-zyp-json-schema-03](https://tools.ietf.org/html/draft-zyp-json-schema-03 "Json schema draft 3 ")
+
 ## License
 
 Released under the MIT license
