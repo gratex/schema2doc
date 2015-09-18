@@ -37,7 +37,26 @@ options:
         -o <FILE> save output to a file (file will be created and overwritten)
 ````
 
+### Instalation
+
+Instalation is simple and only take few steps
+
+1. clone repo
+```sh
+ git clone https://github.com/pmelisko/schema2doc.git 
+```
+2. move to newly cloned repo
+3. install tool
+```sh
+ npm install --global
+```
+4. ready to go
+```sh
+ schema2doc -h
+```
+
 ### Examples:
+cat schema.json | schema2doc
 
 ####input schema
 
