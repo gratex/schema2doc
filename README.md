@@ -1,6 +1,6 @@
 # schema2doc
 
-Schema to document generator, transform json schema to human readably form.
+Schema to document generator, transform JSON schema to human readably form.
 
 ## Important
 
@@ -11,7 +11,7 @@ as the test cases.
 ## Goals
 
  - to easily get overview about your schemas
- - support json schema draft 3 and 4
+ - support JSON schema draft 3 and 4
  - command line interface (cli).
 
 ## CLI
@@ -37,23 +37,29 @@ options:
         -o <FILE> save output to a file (file will be created and overwritten)
 ````
 
-### Instalation
+### Installation
 
-Instalation is simple and only take few steps
+Installation is simple and only take few steps
 
 1. clone repo
-```sh
- git clone https://github.com/pmelisko/schema2doc.git 
-```
+
+	```sh
+	git clone https://github.com/pmelisko/schema2doc.git
+	```
+
 2. move to newly cloned repo
+
 3. install tool
-```sh
- npm install --global
-```
+
+	```sh
+	npm install --global
+	```
+
 4. ready to go
-```sh
- schema2doc -h
-```
+
+	```sh
+	schema2do
+	```
 
 ### Examples:
 cat schema.json | schema2doc
@@ -142,7 +148,7 @@ RQ/NN;Field;Type;Format;Desc
 ```
 ## Links
 
- - Json schema draft 3 [https://tools.ietf.org/html/draft-zyp-json-schema-03](https://tools.ietf.org/html/draft-zyp-json-schema-03 "Json schema draft 3 ")
+ - JSON schema draft 3 [https://tools.ietf.org/html/draft-zyp-json-schema-03](https://tools.ietf.org/html/draft-zyp-json-schema-03 "Json schema draft 3 ")
 
 ## License
 
