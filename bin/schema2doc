@@ -47,9 +47,14 @@ do
      esac
 done
 
+# temporaty fix, when installed on linux/OSX symbolic link is created, so current is not script folder but symbolic link folder
+if [[ $(uname) == MINGW* ]]; then
+	current="$0"
+else
+	current=$(readlink -f "$0")
+fi
 
-current=${0%/*}
-currentAbsolute=$(cd $(dirname $current); pwd)/$(basename $current)
+current=$(dirname $0)
 
 pushd $current >> /dev/null # needed for paths in boot.js to work
 	node ./build/dojo.js load=./build/build.js load="jsonTools/_schema2doc/cli" $OPT $FILE
