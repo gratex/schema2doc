@@ -54,7 +54,7 @@ else
 	current=$(readlink -f "$0")
 fi
 
-current=$(dirname $0)
+current=$(dirname $current)
 
 pushd $current >> /dev/null # needed for paths in boot.js to work
 	node ./build/dojo.js load=./build/build.js load="jsonTools/_schema2doc/cli" $OPT $FILE
