@@ -50,13 +50,17 @@ done
 # temporaty fix, when installed on linux/OSX symbolic link is created, so current is not script folder but symbolic link folder
 if [[ $(uname) == MINGW* ]]; then
 	current="$0"
-else
+elif [[ $OSTYPE == darwin* ]]; then
+    # gnu readlink (brew install coreutils)
+    current=$(greadlink -f "$0") 
+else 
+    #linux
 	current=$(readlink -f "$0")
 fi
 
 current=$(dirname $current)
 
-pushd $current >> /dev/null # needed for paths in boot.js to work
+pushd $current >> /dev/null # needed for paths
 	node ./build/dojo.js load=./build/build.js load="jsonTools/_schema2doc/cli" $OPT $FILE
 popd >> /dev/null
  
