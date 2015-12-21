@@ -1,0 +1,7 @@
+RQ/NN	Field	Type	Format	Desc
+------	------	------	------	------
+++	id	number		Product identifier
+++	name	string		Name of the product
+++	price	number		
+-+	tags[*]	array of string		
+
