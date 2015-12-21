@@ -13,6 +13,7 @@ as the test cases.
  - to easily get overview about your schemas
  - support JSON schema draft 3 and 4
  - command line interface (cli).
+ - support $ref
 
 ## CLI
 
@@ -58,7 +59,7 @@ Installation is simple and only take few steps
 4. ready to go
 
 	```sh
-	schema2do
+	schema2doc
 	```
 
 ### Examples:
