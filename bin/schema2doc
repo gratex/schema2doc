@@ -1,66 +1,97 @@
-#!/bin/bash
+#!/usr/bin/env node
 
-## Convert JSON schemas to compact and more readable format.
+var fs = require('fs');
+var byline = require('byline');
 
-usage () {
-	echo "Usage:"
-	echo "schema2doc [-h|-r|-l|-c|-o <FILE>]"
-	echo "options:"
-	echo -e "\t-h print this help\n"
-	echo -e "\t-r print to raw format (default)\n"
-	echo -e "\t-l print to html format, table and simple css\n"
-	echo -e "\t-c print to csv format\n"
-	echo -e "\t-a print constraints, only intervals are now supported (TODO)\n"
-	echo -e "\t-o <FILE> save output to a file (file will be created and overwritten)\n"
+// templates
+var toCommon = require('../lib/toCommon'); // contains processing of schema
+var toCsv = require('../lib/toCsv');
+var toHtml = require('../lib/toHtml');
+var toRaw = require('../lib/toRaw');
+
+// process input stream
+var input = [];
+var stream = byline(process.stdin/*,{keepEmptyLines:true}*/);
+stream.on("data", function(line) {
+	input.push(line + "");
+}).on("end", function() {
+	processInput(input.join("\n"));
+});
+
+function processInput(inputString) {
+		function generate(/*callback */ to, /*string*/ jsonInput, /*string?*/ file) {
+			// to: function
+			//		callback to toCsv, toHtml, toRaw
+			// jsonInput : string
+			//		input schema that will be processed
+			// file : string?
+			//		path where output file should be saved
+			write(to(jsonInput, toCommon), file);
+		}
+		
+		// get arguments
+		var args = Array.prototype.concat.apply([], process.argv.slice(2));
+
+		try {
+			input = JSON.parse(inputString);
+		} catch (e) {
+			process.stderr.write("ERROR: schema could not be parsed, please check schema\n");
+			process.stderr.write(e);
+		}
+		
+		var param = args[0];
+		var filePath = args[1];	
+		if (param) {
+			// process first arguments
+			switch (param) {
+			case '--help' : 
+				/*falls through*/
+			case '-h':
+				printHelp();
+				break;
+			case '-c':
+				generate(toCsv, input, filePath);
+				break;
+			case '-l':
+				generate(toHtml, input, filePath);
+				break;
+			case '-r': 
+				
+			default:
+				generate(toRaw, input, filePath);
+			}
+		} else { // default is raw format		
+			generate(toRaw, input, filePath);
+		}
+	}
+
+
+function write(/*string*/ str, /*string?*/file) {
+	// str : string
+	//		processed schema, output depends on options (html, csv, raw)
+	// file : string?
+	//		if defined, try to save output to given file path, output is always print on stdout
+	if(file) {
+		try {
+			fs.writeFile(file, str);
+		} catch(e) {
+			process.stderr.write("Error: output could not be saved");
+			process.stderr.write(e);
+		}
+	}
+	process.stdout.write(str + "\n");
 }
 
-OPT="r" #default value, raw format
+function printHelp() {
+	var helpText = "Usage:\n" + //
+		"schema2doc [-h|-r|-l|-c|-o <FILE>]\n" + //
+		"options:\n" + //
+		"\t-h print this help\n" + //
+		"\t-r print to raw format (default)\n" + //
+		"\t-l print to html format, table and simple css\n" + //
+		"\t-c print to csv format\n" + //
+		"\t-a print constraints, only intervals are now supported (TODO)\n" + //
+		"\t-o <FILE> save output to a file (file will be created and overwritten)\n";
 
-while getopts "hlcro:" OPTION
-do
-	case $OPTION in
-		h)
-             usage
-             exit 1
-             ;;
-        r)
-            OPT=$OPTION
-             ;;
-        l)
-            OPT=$OPTION
-             ;;
-        c)
-             OPT=$OPTION
-             ;;
-        o)
-            FILE=$OPTARG
-            if [[ ! -d $(dirname $FILE) ]]; then
-        		echo "Error: file could not be saved, directory where file could be saved does not exist" >&2
-        		unset FILE #unset variable
-        	fi 
-             ;;
-         ?)
-        	echo "Unknown option, please see help"
-            usage
-            exit
-            ;;
-     esac
-done
-
-# temporaty fix, when installed on linux/OSX symbolic link is created, so current is not script folder but symbolic link folder
-if [[ $(uname) == MINGW* ]]; then
-	current="$0"
-elif [[ $OSTYPE == darwin* ]]; then
-    # gnu readlink (brew install coreutils)
-    current=$(greadlink -f "$0") 
-else 
-    #linux
-	current=$(readlink -f "$0")
-fi
-
-current=$(dirname $current)
-
-pushd $current >> /dev/null # needed for paths
-	node ./build/dojo.js load=./build/build.js load="jsonTools/_schema2doc/cli" $OPT $FILE
-popd >> /dev/null
- 
+	console.log(helpText);
+}
