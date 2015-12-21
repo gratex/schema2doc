@@ -7,10 +7,10 @@ var toCsv = require('../lib/toCsv');
 var toHtml = require('../lib/toHtml');
 var toRaw = require('../lib/toRaw');
 
-var simpleSchema = fs.readFileSync("./test/input/in.schema.json", "UTF-8");
-var csvSimpleOut = fs.readFileSync("./test/input/out.csv", "UTF-8");
-var htmlSimpleOut = fs.readFileSync("./test/input/out.html", "UTF-8");;
-var rawSimpleOut = fs.readFileSync("./test/input/out.raw", "UTF-8");;
+var simpleSchema = fs.readFileSync("./test/input/in.schema.json", "utf8");
+var csvSimpleOut = fs.readFileSync("./test/input/out.csv", "utf8");
+var htmlSimpleOut = fs.readFileSync("./test/input/out.html", "utf8");;
+var rawSimpleOut = fs.readFileSync("./test/input/out.raw", "utf8");;
 
 describe("schema2doc", function() {
 	it("to csv format", function() {
