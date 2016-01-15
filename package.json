@@ -21,7 +21,8 @@
     "test": "mocha test/test.js"
   },
   "dependencies": {
-      "byline": "^4.2.1"
+      "byline": "^4.2.1",
+      "minimist" : "^1.2.0"
   },
   "devDependencies": {
     "assert": "^1.3.0",

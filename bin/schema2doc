@@ -12,58 +12,59 @@ var toRaw = require('../lib/toRaw');
 // process input stream
 var input = [];
 var stream = byline(process.stdin/*,{keepEmptyLines:true}*/);
-stream.on("data", function(line) {
+stream.on("data", function (line) {
 	input.push(line + "");
-}).on("end", function() {
+}).on("end", function () {
 	processInput(input.join("\n"));
 });
 
 function processInput(inputString) {
-		function generate(/*callback */ to, /*string*/ jsonInput, /*string?*/ file) {
-			// to: function
-			//		callback to toCsv, toHtml, toRaw
-			// jsonInput : string
-			//		input schema that will be processed
-			// file : string?
-			//		path where output file should be saved
-			write(to(jsonInput, toCommon), file);
-		}
-		
-		// get arguments
-		var args = Array.prototype.concat.apply([], process.argv.slice(2));
-
-		try {
-			input = JSON.parse(inputString);
-		} catch (e) {
-			process.stderr.write("ERROR: schema could not be parsed, please check schema\n");
-			process.stderr.write(e);
-		}
-		
-		var param = args[0];
-		var filePath = args[1];	
-		if (param) {
-			// process first arguments
-			switch (param) {
-			case '--help' : 
-				/*falls through*/
-			case '-h':
-				printHelp();
-				break;
-			case '-c':
-				generate(toCsv, input, filePath);
-				break;
-			case '-l':
-				generate(toHtml, input, filePath);
-				break;
-			case '-r': 
-				
-			default:
-				generate(toRaw, input, filePath);
-			}
-		} else { // default is raw format		
-			generate(toRaw, input, filePath);
-		}
+	function generate(/*callback */ renderer, /*string*/ jsonInput, /*string?*/ file) {
+		// renderer: function
+		//		callback to toCsv, toHtml, toRaw
+		// jsonInput : string
+		//		input schema that will be processed
+		// file : string?
+		//		path where output file should be saved
+		write(renderer(jsonInput, toCommon), file);
 	}
+
+	function createOptions(args) {
+		// TODO process arguments to create option object to modify output
+
+	}
+		
+	// get arguments
+	var args = require('minimist')(process.argv.slice(2));
+
+	try {
+		input = JSON.parse(inputString);
+	} catch (e) {
+		process.stderr.write("ERROR: schema could not be parsed, please check schema\n");
+		process.stderr.write(e);
+	}
+
+	var filePath = args._[0]; // should be filePath	
+	var options = createOptions(args);
+
+	var rendererMap = {
+		c: toCsv,
+		l: toHtml,
+		r: toRaw
+	};
+
+	if (args.h || args.help) {
+		printHelp();
+		return;
+	}
+
+	var rendered = toRaw;
+	Object.keys(rendererMap).forEach(function (key) {
+		args[key] == true && (rendered = rendererMap[key]);
+	});
+
+	generate(rendered, input, filePath);
+}
 
 
 function write(/*string*/ str, /*string?*/file) {
@@ -71,10 +72,10 @@ function write(/*string*/ str, /*string?*/file) {
 	//		processed schema, output depends on options (html, csv, raw)
 	// file : string?
 	//		if defined, try to save output to given file path, output is always print on stdout
-	if(file) {
+	if (file) {
 		try {
 			fs.writeFile(file, str);
-		} catch(e) {
+		} catch (e) {
 			process.stderr.write("Error: output could not be saved");
 			process.stderr.write(e);
 		}
