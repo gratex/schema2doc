@@ -29,9 +29,31 @@ function processInput(inputString) {
 		write(renderer(jsonInput, toCommon), file);
 	}
 
+	var columnsMap = {
+		rqnn: {
+			title: "RQ/NN",
+			visible: kernelTrue
+		},
+		field: {
+			title: "Field",
+			visible: kernelTrue
+		},
+		type: { title: "Type", visible: kernelTrue },
+		format: { title: "Format", visible: kernelTrue },
+		constraints: { title: "Constraints", visible: function(options) {
+			return options.a;	
+		} },
+		description: { title: "Desc", visible: kernelTrue }
+	};
 	function createOptions(args) {
-		// TODO process arguments to create option object to modify output
-
+		var columns = {};
+		Object.keys(columnsMap).forEach(function(key) {
+			columnsMap[key].visible(args) && (columns[key] = columnsMap[key].title);
+		});
+		
+		return {
+			columns : columns
+		};	
 	}
 		
 	// get arguments
@@ -44,7 +66,7 @@ function processInput(inputString) {
 		process.stderr.write(e);
 	}
 
-	var filePath = args._[0]; // should be filePath	
+	var filePath = args._[0] || args.o;	
 	var options = createOptions(args);
 
 	var rendererMap = {
@@ -63,7 +85,7 @@ function processInput(inputString) {
 		args[key] == true && (rendered = rendererMap[key]);
 	});
 
-	generate(rendered, input, filePath);
+	generate(rendered(options), input, filePath);
 }
 
 
@@ -85,14 +107,19 @@ function write(/*string*/ str, /*string?*/file) {
 
 function printHelp() {
 	var helpText = "Usage:\n" + //
-		"schema2doc [-h|-r|-l|-c|-o <FILE>]\n" + //
+		"schema2doc [-a|-h|-r|-l|-c|-o <FILE>]\n" + //
 		"options:\n" + //
-		"\t-h print this help\n" + //
+		"\t-a print constraints, only intervals are now supported\n" + //
+		"\t-h print this help (alias --help)\n" + //
 		"\t-r print to raw format (default)\n" + //
 		"\t-l print to html format, table and simple css\n" + //
 		"\t-c print to csv format\n" + //
-		"\t-a print constraints, only intervals are now supported (TODO)\n" + //
+		"\n"
 		"\t-o <FILE> save output to a file (file will be created and overwritten)\n";
 
 	console.log(helpText);
+}
+
+function kernelTrue(/*options*/) {
+	return true;
 }
