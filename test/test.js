@@ -1,5 +1,6 @@
 var assert = require("assert");
 var fs = require("fs");
+var endOfLine = require('os').EOL;
 
 var options = {
 	columns : {
@@ -7,7 +8,7 @@ var options = {
 		field: "Field",
 		type: "Type",
 		format: "Format",
-		description:  "Desc",
+		description:  "Desc"
 	}
 }
 
@@ -18,19 +19,19 @@ var toRaw = require('../lib/toRaw')(options);
 
 var simpleSchema = fs.readFileSync("./test/input/in.schema.json", "utf8");
 var csvSimpleOut = fs.readFileSync("./test/input/out.csv", "utf8");
-var htmlSimpleOut = fs.readFileSync("./test/input/out.html", "utf8");;
-var rawSimpleOut = fs.readFileSync("./test/input/out.raw", "utf8");;
+var htmlSimpleOut = fs.readFileSync("./test/input/out.html", "utf8");
+var rawSimpleOut = fs.readFileSync("./test/input/out.raw", "utf8");
 
 describe("schema2doc", function() {
 	it("to csv format", function() {
-		assert.equal(toCsv(simpleSchema, toCommon).trim(), csvSimpleOut.trim(), "Csv format doesnt match with expected format");
+		assert.equal(toCsv(simpleSchema, toCommon).trim().replace(/\r\n/g,endOfLine), csvSimpleOut.trim(), "Csv format doesnt match with expected format");
 	});
 
 	it("to html format", function() {
-		assert.equal(toHtml(simpleSchema, toCommon).trim(), htmlSimpleOut.trim(), "Html format doesnt match with expected format");
+		assert.equal(toHtml(simpleSchema, toCommon).trim().replace(/\r\n/g,endOfLine), htmlSimpleOut.trim(), "Html format doesnt match with expected format");
 	});
 
 	it("to raw format", function() {
-		assert.equal(toRaw(simpleSchema, toCommon).trim(), rawSimpleOut.trim(), "Raw format doesnt match with expected format");
+		assert.equal(toRaw(simpleSchema, toCommon).trim().replace(/\r\n/g,endOfLine), rawSimpleOut.trim(), "Raw format doesnt match with expected format");
 	});
 });
