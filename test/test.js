@@ -1,11 +1,20 @@
 var assert = require("assert");
 var fs = require("fs");
 
+var options = {
+	columns : {
+		rqnn: "RQ/NN",
+		field: "Field",
+		type: "Type",
+		format: "Format",
+		description:  "Desc",
+	}
+}
 
 var toCommon = require('../lib/toCommon'); // contains processing of schema
-var toCsv = require('../lib/toCsv');
-var toHtml = require('../lib/toHtml');
-var toRaw = require('../lib/toRaw');
+var toCsv = require('../lib/toCsv')(options);
+var toHtml = require('../lib/toHtml')(options);
+var toRaw = require('../lib/toRaw')(options);
 
 var simpleSchema = fs.readFileSync("./test/input/in.schema.json", "utf8");
 var csvSimpleOut = fs.readFileSync("./test/input/out.csv", "utf8");
