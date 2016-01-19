@@ -1,3 +1,5 @@
+[![Build Status](https://travis-ci.org/pmelisko/schema2doc.svg?branch=master)](https://travis-ci.org/pmelisko/schema2doc)
+
 # schema2doc
 
 Schema to document generator, transform JSON schema to human readably form.
