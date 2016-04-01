@@ -38,9 +38,17 @@ function processInput(inputString) {
 			title: "Field",
 			visible: kernelTrue
 		},
-		type: { title: "Type", visible: kernelTrue },
-		format: { title: "Format", visible: kernelTrue },
-		constraints: { title: "Constraints", visible: function(options) {
+		type: { 
+			title: "Type",
+			visible: kernelTrue 
+		},
+		format: {
+			title: "Format",
+			visible: kernelTrue
+		},
+		constraints: { 
+			title: "Constraints", 
+			visible: function(options) {
 			return options.a;	
 		} },
 		description: { title: "Desc", visible: kernelTrue }
