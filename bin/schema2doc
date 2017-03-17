@@ -9,6 +9,14 @@ var toCsv = require('../lib/toCsv');
 var toHtml = require('../lib/toHtml');
 var toRaw = require('../lib/toRaw');
 
+// get arguments and if help is needed end
+var args = require('minimist')(process.argv.slice(2));
+if (args.h || args.help) {
+	printHelp();
+	return;
+}
+
+
 // process input stream
 var input = [];
 var stream = byline(process.stdin/*,{keepEmptyLines:true}*/);
@@ -64,8 +72,7 @@ function processInput(inputString) {
 		};	
 	}
 		
-	// get arguments
-	var args = require('minimist')(process.argv.slice(2));
+	
 
 	try {
 		input = JSON.parse(inputString);
@@ -82,11 +89,6 @@ function processInput(inputString) {
 		l: toHtml,
 		r: toRaw
 	};
-
-	if (args.h || args.help) {
-		printHelp();
-		return;
-	}
 
 	var rendered = toRaw;
 	Object.keys(rendererMap).forEach(function (key) {
