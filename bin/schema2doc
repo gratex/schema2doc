@@ -71,8 +71,6 @@ function processInput(inputString) {
 			columns : columns
 		};	
 	}
-		
-	
 
 	try {
 		input = JSON.parse(inputString);
