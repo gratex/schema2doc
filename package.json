@@ -15,7 +15,7 @@
     "generator"
   ],
   "bin": {
-    "schema2doc": "./bin/schema2doc"
+    "schema2doc2": "./bin/schema2doc"
   },
   "scripts": {
     "test": "mocha test/test.js"
