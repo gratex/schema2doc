@@ -5,10 +5,10 @@
   "author": "Peter Melisko <pmelisko@gratex.com>",
   "repository": {
     "type": "git",
-    "url": "https://github.com/pmelisko/schema2doc"
+    "url": "https://github.com/gratex/schema2doc"
   },
   "bugs": {
-    "url": "https://github.com/pmelisko/schema2doc/issues"
+    "url": "https://github.com/gratex/schema2doc/issues"
   },
   "keywords": [
     "json schema",

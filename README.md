@@ -1,4 +1,4 @@
-[![Build Status](https://travis-ci.org/pmelisko/schema2doc.svg?branch=master)](https://travis-ci.org/pmelisko/schema2doc)
+[![Build Status](https://travis-ci.org/gratex/schema2doc.svg?branch=master)](https://travis-ci.org/gratex/schema2doc)
 
 # schema2doc
 
@@ -47,7 +47,7 @@ Installation is simple and only take few steps
 1. clone repo
 
 	```sh
-	git clone https://github.com/pmelisko/schema2doc.git
+	git clone https://github.com/gratex/schema2doc.git
 	```
 
 2. move to newly cloned repo
