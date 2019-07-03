@@ -22,7 +22,11 @@ as the test cases.
 Schema2doc can be also used as a lib. Install module as local dependency
 
 ```sh
-npm install schema2doc
+npm install git+https://github.com/gratex/schema2doc.git
+
+OR
+
+npm install git+ssh://git@github.com/gratex/schema2doc.git
 
 ```
 
@@ -77,7 +81,12 @@ You can also use the simple command line interface to process `stdin` and
 `stdout`
 
 ```sh
-npm install -g schema2doc
+npm install -g git+https://github.com/gratex/schema2doc.git
+
+OR
+
+npm install -g git+ssh://git@github.com/gratex/schema2doc.git
+
 ```
 
 ### Usage:
