@@ -5,17 +5,17 @@
 		"id":{
 			"type":"number",
 			"description": "Product identifier",
-			"required":true
+			"required": true
 		},
 		"name":{
 			"description":"Name of the product",
 			"type":"string",
-			"required":true
+			"required": true
 		},
 		"price":{
 			"type": "number",
 			"minimum":0,
-			"required":true
+			"required": true
 		},
 		"tags":{
 			"type":"array",

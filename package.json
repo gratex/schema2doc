@@ -17,6 +17,7 @@
   "bin": {
     "schema2doc": "./bin/schema2doc"
   },
+  "main" : "./lib/index.js",
   "scripts": {
     "test": "mocha test/test.js"
   },
