@@ -1,4 +1,4 @@
-[![Build Status](https://travis-ci.org/pmelisko/schema2doc.svg?branch=master)](https://travis-ci.org/pmelisko/schema2doc)
+[![Build Status](https://travis-ci.org/gratex/schema2doc.svg?branch=master)](https://travis-ci.org/gratex/schema2doc)
 
 # schema2doc
 
@@ -16,6 +16,60 @@ as the test cases.
  - support JSON schema draft 3 and 4
  - command line interface (cli).
  - support $ref
+
+## LIB
+
+Schema2doc can be also used as a lib. Install module as local dependency
+
+```sh
+npm install schema2doc
+
+```
+
+than you can require desired rendered, available toCsv, toHtml and toRaw
+
+```sh
+const { toCsv, toHtml, toRaw } = require('schema2doc');
+
+const schema = {
+      "type": "object",
+        "id": "Semaphore.POST.req.body.schema.json",
+        "$schema": "http://json-schema.org/draft-03/schema",
+        "additionalProperties": false,
+        "properties": {
+                "flagName": {
+                        "type": [
+                                "string",
+                                "null"
+                        ],
+                        "maxLength": 128,
+                        "required": true,
+                        "minLength": 1
+                },
+                "flagStatus": {
+                        "type": "boolean",
+                        "required": true
+                }
+        }  
+};
+
+console.log(toCsv(schema)); 
+console.log(toHtml(schema));
+console.log(toRaw(schema));
+
+```
+
+If you want to print constraints, you can send options as second parameter (no other options supported yet)
+
+```sh
+var options = {
+        constraints : true
+};
+
+console.log(toRaw(schema, options));
+
+```
+
 
 ## CLI
 
@@ -47,7 +101,7 @@ Installation is simple and only take few steps
 1. clone repo
 
 	```sh
-	git clone https://github.com/pmelisko/schema2doc.git
+	git clone https://github.com/gratex/schema2doc.git
 	```
 
 2. move to newly cloned repo
@@ -149,6 +203,7 @@ RQ/NN;Field;Type;Format;Desc
 +-;flagName;string,null;;
 ++;flagStatus;boolean;;
 ```
+
 ## Links
 
  - JSON schema draft 3 [https://tools.ietf.org/html/draft-zyp-json-schema-03](https://tools.ietf.org/html/draft-zyp-json-schema-03 "Json schema draft 3 ")
@@ -156,5 +211,3 @@ RQ/NN;Field;Type;Format;Desc
 ## License
 
 Released under the MIT license
-
-

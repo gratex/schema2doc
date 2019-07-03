@@ -1,13 +1,11 @@
 #!/usr/bin/env node
+/* jshint esversion: 6 */
 
 var fs = require('fs');
 var byline = require('byline');
 
 // templates
-var toCommon = require('../lib/toCommon'); // contains processing of schema
-var toCsv = require('../lib/toCsv');
-var toHtml = require('../lib/toHtml');
-var toRaw = require('../lib/toRaw');
+var { toCsv, toHtml, toRaw} = require("../lib/index");
 
 // get arguments and if help is needed end
 var args = require('minimist')(process.argv.slice(2));
@@ -27,49 +25,14 @@ stream.on("data", function (line) {
 });
 
 function processInput(inputString) {
-	function generate(/*callback */ renderer, /*string*/ jsonInput, /*string?*/ file) {
+	function generate(/*callback */ renderer, /*string*/ jsonInput, /*string?*/ file, /*object?*/ options) {
 		// renderer: function
 		//		callback to toCsv, toHtml, toRaw
 		// jsonInput : string
 		//		input schema that will be processed
 		// file : string?
 		//		path where output file should be saved
-		write(renderer(jsonInput, toCommon), file);
-	}
-
-	var columnsMap = {
-		rqnn: {
-			title: "RQ/NN",
-			visible: kernelTrue
-		},
-		field: {
-			title: "Field",
-			visible: kernelTrue
-		},
-		type: { 
-			title: "Type",
-			visible: kernelTrue 
-		},
-		format: {
-			title: "Format",
-			visible: kernelTrue
-		},
-		constraints: { 
-			title: "Constraints", 
-			visible: function(options) {
-			return options.a;	
-		} },
-		description: { title: "Desc", visible: kernelTrue }
-	};
-	function createOptions(args) {
-		var columns = {};
-		Object.keys(columnsMap).forEach(function(key) {
-			columnsMap[key].visible(args) && (columns[key] = columnsMap[key].title);
-		});
-		
-		return {
-			columns : columns
-		};	
+		write(renderer(jsonInput, options), file);
 	}
 
 	try {
@@ -79,8 +42,8 @@ function processInput(inputString) {
 		process.stderr.write(e);
 	}
 
-	var filePath = args._[0] || args.o;	
-	var options = createOptions(args);
+	var filePath = args._[0] || args.o;
+	var options = args;
 
 	var rendererMap = {
 		c: toCsv,
@@ -93,7 +56,7 @@ function processInput(inputString) {
 		args[key] == true && (rendered = rendererMap[key]);
 	});
 
-	generate(rendered(options), input, filePath);
+	generate(rendered, input, filePath, options);
 }
 
 
@@ -122,12 +85,8 @@ function printHelp() {
 		"\t-r print to raw format (default)\n" + //
 		"\t-l print to html format, table and simple css\n" + //
 		"\t-c print to csv format\n" + //
-		"\n"
+		"\n" + //
 		"\t-o <FILE> save output to a file (file will be created and overwritten)\n";
 
 	console.log(helpText);
-}
-
-function kernelTrue(/*options*/) {
-	return true;
 }
