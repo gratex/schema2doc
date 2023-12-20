@@ -130,9 +130,9 @@ Installation is simple and only take few steps
 ### Examples:
 cat schema.json | schema2doc
 
-####input schema
+#### input schema
 
-```sh
+```json
 {
         "type": "object",
         "id": "Semaphore.POST.req.body.schema.json",
@@ -156,7 +156,7 @@ cat schema.json | schema2doc
 }
 ```
 
-####Raw format (default options or -r)
+#### Raw format (default options or -r)
 
 ```sh
 RQ/NN   Field   Type    Format  Desc
@@ -166,7 +166,7 @@ RQ/NN   Field   Type    Format  Desc
 ```
 
 
-####HTML format (option -l)
+#### HTML format (option -l)
 
 ```html
 <html>
@@ -204,7 +204,7 @@ RQ/NN   Field   Type    Format  Desc
 ```
 
 
-####CSV format (option -c)
+#### CSV format (option -c)
 
 ```sh
 sep=;
