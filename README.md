@@ -99,7 +99,7 @@ options:
         -r print to raw format (default)
         -l print to html format, table and simple css
         -c print to csv format
-        -a print constraints, only intervals are now supported
+        -a print constraints (intervals, pattern)
         -o <FILE> save output to a file (file will be created and overwritten)
 ````
 
