@@ -77,8 +77,9 @@ function write(/*string*/ str, /*string?*/file) {
 }
 
 function printHelp() {
-	var helpText = "Usage:\n" + //
-		"schema2doc [-a|-h|-r|-l|-c|-o <FILE>]\n" + //
+	var helpText = "Version: 241012\n" + //
+		"Usage:\n" + //
+		"\tschema2doc [-a|-h|-r|-l|-c|-o <FILE>]\n" + //
 		"options:\n" + //
 		"\t-a print constraints, only intervals are now supported\n" + //
 		"\t-h print this help (alias --help)\n" + //
