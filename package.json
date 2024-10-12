@@ -1,6 +1,6 @@
 {
   "name": "schema2doc",
-  "version": "1.1.0",
+  "version": "1.1.20241012",
   "description": "Schema 2 doc converter, convert json schema to human readable form",
   "author": "Peter Melisko <pmelisko@gratex.com>",
   "repository": {
