@@ -17,6 +17,16 @@ as the test cases.
  - command line interface (cli).
  - support $ref
 
+## Identifier branch
+
+added identifiers (trying to find specific part of subschema, i.e enum), orig schema2doc uses just type + indexes 
+
+schema2doc
+TransEnv.File[*]        array of [ object0 object1]
+
+schema2doc2
+TransEnv.File[*]        {TransEnv.File[@exportType=1,2,3]},{TransEnv.File[@exportType=4,5,6,7,8]}
+
 ## LIB
 
 Schema2doc can be also used as a lib. Install module as local dependency
